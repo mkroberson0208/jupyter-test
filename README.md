@@ -1,4 +1,4 @@
-# **Balance-Weighted Classification Models for Financial Products**
+# **Balance-Weighted Class Prediction for Financial Products**
 
 ## 1.	Event indicators with balances
 
