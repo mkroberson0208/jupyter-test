@@ -23,3 +23,16 @@ Weighting observations by dollar balance is also common in investment portfolio 
 w_i=B_i/(∑_(i=1)^N▒B_i )
 
 The weights can be passed to a classification model as sample weight parameters. This effectively over-samples or under-samples each observation depending on whether they have a higher-than-average or lower-than-average balance, respectively.
+
+## 4.	Classification and Class Likelihood
+
+Over-sampling or under-sampling is often used in machine learning for classification tasks on rare events data. The primary motivation is for refined calibration and performance. Often times classification accuracy alone will over-state the quality of a particular forecast when the minority class occurrence is very rare. False positive and false negative rates, or Type I and II errors, provide a more nuanced view of majority vs. minority class performance. A model might achieve 99% accuracy but incorrectly classify every single minority outcome simply because 99%+ of observations are in the majority class. Re-sampling techniques artificially increase the number of minority outcomes in order to improve false negative rates.
+
+However in financial cash flow analysis the model output is usually class likelihood, not classification ID:
+* Charge-off probability as credit risk adjustment or % balance outflow
+* Prepayment probability as % balance outflow
+* Attrition probability as % line and balance outflow 
+
+In a classification task, the class likelihood is rounded up or down to output class ID prediction. For cash flow adjustment the class likelihood is used directly without rounding. Individual loans aren’t classified as default/non-defaulted, but instead a percentage of their balance is subtracted each month to adjust the portfolio valuation and cash flow. 
+
+Re-sampling techniques introduce a bias that skews the average class probabilities. While for classification tasks this doesn’t significantly impact class prediction, since probabilities are rounded into 0/1 class IDs, the underlying class likelihoods will be misrepresentative of the baseline event rate. Over-sampling default indicators will lead to over-prediction of portfolio loss rates unless tied to balance amounts. Re-sampling should only be used when class ID is the ultimate variable of interest, not class likelihood.
