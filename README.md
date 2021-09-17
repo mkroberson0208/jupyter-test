@@ -15,15 +15,15 @@ Although a binary classification model could be estimated from event indicator a
 There are two possible steps to adapt a classification model (i.e. logistic regression) for event indicators with dollar balances:
 
 1. Include balance as an input variable in the model
-2. Re-weight the event indicator to match the dollar balance impact
+2. Re-weight the event indicator to dollar balance
 
-The second method is preferable because it doesn’t necessarily assume a fixed relationship between balance and event occurrence. Directly re-weighting observations instead uses the observed position-level relationship in each time period, which might change with the economic cycle. 
+The second method is preferable because it doesn’t necessarily assume a fixed relationship between balance and event occurrence. Directly re-weighting observations instead uses the observed position-level relationship in each time period. 
 
-Weighting observations by dollar balance is common in investment portfolio management, where each position receives a weight of % dollar allocation. A portfolio of loans or savings products is no different in this regard. The weight for each loan-level or account-level observation would be % of observation-level balance:
+Weighting observations by dollar balance is also common in investment portfolio management, where each position receives a weight of % dollar allocation. A portfolio of loans or savings products is no different in this regard. The weight for each loan-level or account-level observation would be % of observation-level balance to total balance:
 
 w<sub>i</sub>=B<sub>i</sub>/(∑B<sub>i</sub>)
 
-The weights can then be passed to a classification model as sample weight parameters. This effectively over-samples or under-samples each observation depending on whether they have a higher-than-average or lower-than-average balance, respectively.
+The weights are then passed to a classification model as sample weight parameters. This effectively over-samples or under-samples each observation depending on whether they have a higher-than-average or lower-than-average balance, respectively.
 
 ## 3. Example
 
