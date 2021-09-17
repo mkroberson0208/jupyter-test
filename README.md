@@ -140,16 +140,6 @@ print('Predicted charge-off rate: ', (df['Face_amt']*df['y_hat']).sum()/df['Face
     ==============================================================================
     Predicted charge-off rate:  0.3571428572928815
     
+## Conclusion
 
-## 4.	Classification and predicting class likelihood
-
-Over-sampling or under-sampling is often used in machine learning for classification tasks on imbalanced data. The primary motivation is for refined calibration and performance. Often times classification accuracy alone will over-state the quality of a forecast when minority class occurrence is very rare (<1%). False positive and false negative rates, or Type I and II errors, provide a more nuanced view of majority and minority class performance. A model might achieve 99% accuracy but incorrectly classify every single minority outcome simply because 99%+ of observations are in the majority class. Re-sampling techniques artificially change the number of minority outcomes in data to improve false positive/false negative rates. The confusion matrix and senstivity/specificty rates are used to score the model on imbalanced data and adjust for .
-
-In contrast, for financial cash flow analysis the model output is class likelihood, not class ID:
-* Charge-off probability as credit risk adjustment or % balance outflow
-* Prepayment probability as % balance outflow
-* Attrition probability as % line and balance outflow 
-
-For cash flow adjustments the class likelihood is used directly. Individual loans aren’t classified as default/non-defaulted, but instead a percentage of their balance is subtracted each month to adjust the portfolio valuation and cash flow. 
-
-Re-sampling techniques introduce a bias that skews the average class probabilities. While for classification tasks this doesn’t significantly impact class prediction, since probabilities are rounded into 0/1 class IDs, the underlying class likelihoods will be misrepresentative of the baseline event rate, skewed in the direction of sampling. Over-sampling default indicators will lead to over-prediction of portfolio loss rates unless tied to balance amounts. Re-sampling should only be used when class ID is the ultimate variable of interest, not class likelihood.
+In financial cash flow analysis the model output is typically class likelihood multiplied by principal balance. This adjusts the balance in each time period by amount lost to credit defaults, prepayments, or closures. In order for predicted class likelihood to reflect the underlying financial impact, the model estimation on event indicator must be re-scaled by observation-level principal balance divided by portfolio balance, or portfolio weight. Balance-weighting helps to produce accurate forecasts in dollar terms while retaining the use of well-established classification models such as logistic regression.
