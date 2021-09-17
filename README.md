@@ -2,13 +2,13 @@
 
 ## 1.	Event indicators with balances
 
-Financial cash flow models are frequently estimated on event indicators with a dollar balance attached:
+Financial cash flow models are frequently estimated on event indicators with a dollar-denominated balance attached:
 
-*	Default indicator with balance charged-off the balance sheet
-*	Prepayment indicator with balance prepaid
+* Default indicator with balance charged-off the balance sheet
+* Prepayment indicator with balance prepaid
 * Closure indicator with balance removed due to attrition 
 
-Although the event occurrence might be estimated as a 0/1 binary classification task, this would misrepresent the target variable of interest. For example, if larger loan sizes are more likely to default, the dollar charge-off rate will be above the default event rate. Likewise, often times smaller account balances are more likely to close, and the dollar-denominated closure rate is below the event rate. In either case the model estimated on event indicator will be misspecified and produce incorrect forecasts. Balance-weighted rates reflect the actual cash flows and impact on enterprise-level financial performance.
+Although a binary classification model could be estimated from event indicator alone, this would misrepresent the target variable of interest, the impact to portfolio balance. For example, if larger loan sizes are more likely to default, the dollar gross loss or charge-off rate will be consistenly above the default event rate. Likewise, often times smaller account balances are more likely to close, and the dollar-denominated closure rate is below the event rate. In either case the classification model estimated on event indicator will be misspecified and produce incorrect forecasts. Balance-weighted rates reflect the actual cash flow and impact on enterprise-level financial performance.
 
 
 ## 2. Adjustment to portfolio weight
@@ -19,11 +19,11 @@ There are two possible steps to adapt a classification model (i.e. logistic regr
 
 The second method is preferable because it doesn’t necessarily assume a fixed relationship between balance and event occurrence. Directly re-weighting observations instead uses the observed position-level relationship in each time period, which might change with the economic cycle. 
 
-Weighting observations by dollar balance is also common in investment portfolio management, where each position receives a weight of % dollar allocation. A portfolio of loans or savings products is no different in this regard. The weight for each loan-level or account-level observation would be % of balance for that product class at observation date (t):
+Weighting observations by dollar balance is common in investment portfolio management, where each position receives a weight of % dollar allocation. A portfolio of loans or savings products is no different in this regard. The weight for each loan-level or account-level observation would be % of observation-level balance:
 
 w<sub>i</sub>=B<sub>i</sub>/(∑B<sub>i</sub>)
 
-The weights can be passed to a classification model as sample weight parameters. This effectively over-samples or under-samples each observation depending on whether they have a higher-than-average or lower-than-average balance, respectively.
+The weights can then be passed to a classification model as sample weight parameters. This effectively over-samples or under-samples each observation depending on whether they have a higher-than-average or lower-than-average balance, respectively.
 
 ## 3. Example
 
